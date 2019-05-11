@@ -1,4 +1,10 @@
 {
-  "message": "hello i18n !!",
-  "appName": "Salon"
+  "appName": "Salon",
+  "nameLabel": "Name",
+  "passwordLabel": "Password",
+  "signInLabel": "Sign in",
+  "signInGoogleLabel": "Google",
+  "nameRequiredErrorMessage": "Name is required",
+  "nameLengthErrorMessage": "Name must be less than 10 characters",
+  "passwordLengthErrorMessage": "Name must be more than 6 characters"
 }

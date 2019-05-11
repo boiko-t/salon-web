@@ -2,7 +2,7 @@ import { Module } from 'vuex';
 import { RootState, AuthState } from '../../types';
 
 export const state: AuthState = {
-  name: '',
+  name: '12444544',
 };
 
 const namespaced: boolean = true;
