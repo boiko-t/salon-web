@@ -47,6 +47,7 @@
                         v-for="item in items"
                         :key="item.title"
                         :to="item.to"
+                        active-class="success"
                         class="v-list-item">
                     <v-list-tile-action>
                         <v-icon>{{ item.icon }}</v-icon>
@@ -73,7 +74,7 @@ export default {
       drawer: null,
       items: [
         { to: '/', title: 'Home', icon: 'dashboard' },
-        { to: '/', title: 'About', icon: 'question_answer' },
+        { to: '/about', title: 'About', icon: 'question_answer' },
       ],
     };
   },

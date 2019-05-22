@@ -5,10 +5,11 @@
     padding: 0;
 
     .v-list-item {
-      margin: 0 $margin-general;
+      margin: 0 15px 10px;
 
       & > .v-list__tile {
-        padding: $padding-small $padding-general;
+        padding: 25px 15px;
+        border-radius: 4px;
 
         &:hover,
         &:focus,
@@ -24,11 +25,11 @@
       }
 
       .v-list__tile__action {
-        margin-right: $margin-general;
+        margin-right: 15px;
         min-width: unset;
 
         i {
-          width: $icon-width;
+          width: 30px;
         }
       }
 
@@ -47,8 +48,8 @@
     }
 
     .v-list__tile__avatar {
-      margin-left: $margin-list-left;
-      margin-right: $margin-list-right;
+      margin-left: 25px;
+      margin-right: 11px;
       min-width: unset;
     }
 
