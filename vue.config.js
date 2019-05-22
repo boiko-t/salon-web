@@ -4,7 +4,14 @@ module.exports = {
       locale: 'en',
       fallbackLocale: 'en',
       localeDir: 'locales',
-      enableInSFC: true
-    }
-  }
-}
+      enableInSFC: true,
+    },
+  },
+  css: {
+    loaderOptions: {
+      sass: {
+        data: `@import "~@/assets/styles/import.scss";`,
+      },
+    },
+  },
+};
