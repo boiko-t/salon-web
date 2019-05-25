@@ -28,6 +28,16 @@
                 persistent
                 mobile-break-point="991"
                 width="260">
+            <v-img
+                    :src="image"
+                    :gradient="sidebarOverlayGradiant"
+                    height="100%"
+            >
+                <v-layout
+                        class="fill-height"
+                        tag="v-list"
+                        column
+                >
             <v-list class="pa-1">
                 <v-list-tile avatar>
                     <v-list-tile-avatar>
@@ -57,6 +67,8 @@
                     />
                 </v-list-tile>
             </v-list>
+                </v-layout>
+            </v-img>
         </v-navigation-drawer>
 
         <v-content>
@@ -66,11 +78,14 @@
 </template>
 
 <script>
+const image = 'https://demos.creative-tim.com/vue-material-dashboard/img/sidebar-2.32103624.jpg';
+const sidebarBackgroundColor = 'rgba(27, 27, 27, 0.74)';
 
 export default {
   name: 'App',
   data() {
     return {
+      image,
       drawer: null,
       items: [
         { to: '/', title: 'Home', icon: 'dashboard' },
@@ -81,6 +96,11 @@ export default {
   methods: {
     openDrawer() {
       this.drawer = !this.drawer;
+    },
+  },
+  computed: {
+    sidebarOverlayGradiant() {
+      return `${sidebarBackgroundColor}, ${sidebarBackgroundColor}`;
     },
   },
 };

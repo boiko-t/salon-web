@@ -44,7 +44,7 @@
 
     .v-list__tile--avatar {
       height: unset;
-      padding: $padding-logo 0;
+      padding: 15px 0;
     }
 
     .v-list__tile__avatar {
@@ -54,8 +54,8 @@
     }
 
     .v-list__tile__title {
-      line-height: $line-height;
-      padding: $padding-avatar-title 0;
+      line-height: 30px;
+      padding: 5px 0;
       height: unset;
       font-size: $font-size-avatar-title !important;
       font-weight: $font-weight-base;
