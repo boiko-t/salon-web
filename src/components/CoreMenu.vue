@@ -116,6 +116,7 @@ export default class CoreMenu extends Vue {
       new DrawerItem('/', 'Home', 'dashboard'),
       new DrawerItem('/about', 'About', 'question_answer'),
       new DrawerItem('/sign-in', 'Sign in', 'account_box'),
+      new DrawerItem('/notifications', 'Notifications', 'notifications'),
     ];
 
     openDrawer() {

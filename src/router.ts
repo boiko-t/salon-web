@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import SignIn from './views/SignIn.vue';
+import Notifications from './views/Notifications.vue';
 
 Vue.use(Router);
 
@@ -17,6 +18,11 @@ export default new Router({
       path: '/sign-in',
       name: 'signIn',
       component: SignIn,
+    },
+    {
+      path: '/notifications',
+      name: 'Notifications',
+      component: Notifications,
     },
     {
       path: '/about',
