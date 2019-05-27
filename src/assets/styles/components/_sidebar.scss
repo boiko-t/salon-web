@@ -51,6 +51,10 @@
       margin-left: 25px;
       margin-right: 11px;
       min-width: unset;
+
+      .v-avatar {
+        background: $green-500;
+      }
     }
 
     .v-list__tile__title {
