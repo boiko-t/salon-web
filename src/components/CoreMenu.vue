@@ -1,5 +1,5 @@
 <template>
-    <v-app>
+    <div>
         <v-toolbar flat
                    prominent>
             <v-toolbar-title class="headline text-uppercase">
@@ -41,11 +41,11 @@
                     <v-list class="pa-1">
                         <v-list-tile avatar>
                             <v-list-tile-avatar>
-                                J
+                                {{nameLabel}}
                             </v-list-tile-avatar>
 
                             <v-list-tile-content>
-                                <v-list-tile-title>John Test</v-list-tile-title>
+                                <v-list-tile-title>{{name}}</v-list-tile-title>
                             </v-list-tile-content>
                         </v-list-tile>
                     </v-list>
@@ -70,11 +70,7 @@
                 </v-layout>
             </v-img>
         </v-navigation-drawer>
-
-        <v-content>
-            <router-view/>
-        </v-content>
-    </v-app>
+    </div>
 </template>
 
 <script lang="ts">
@@ -100,12 +96,20 @@ class DrawerItem {
     sidebarOverlayGradient() {
       return `${sidebarBackgroundColor}, ${sidebarBackgroundColor}`;
     },
+
+    name() {
+      return this.$store.state.auth.name || this.$t('unknownUserName');
+    },
+
+    nameLabel() {
+      return this.name.charAt(0);
+    },
   },
 })
 
 export default class CoreMenu extends Vue {
+    name!: string;
     image: string = imageUrl;
-
     drawer: any = null;
 
     items: DrawerItem[] = [
@@ -115,6 +119,7 @@ export default class CoreMenu extends Vue {
     ];
 
     openDrawer() {
+      console.log(this.$t('unknownUserName'));
       this.drawer = !this.drawer;
     }
 }

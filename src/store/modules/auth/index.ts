@@ -3,6 +3,8 @@ import { RootState } from '../../types';
 import * as firebase from 'firebase/app';
 import FirebaseAuthService from '@/services/FirebaseAuthService';
 
+import User = firebase.User;
+
 class State {
   public name: string = '';
   public email: string = '';
@@ -12,13 +14,16 @@ class State {
 export const actions = {
   async signIn({ state, commit }: {state: State, commit: any}) {
     const service = new FirebaseAuthService();
-    const user = await service.signIn(state.email, state.password);
-    commit('SET_USER_DATA', user.user);
+    return service.signIn(state.email, state.password)
+      .then(({ user }) => commit('SET_USER_DATA', user))
+      .catch(e => Promise.reject(e));
   },
+
   async signInGoogle({ commit }: {commit: any}) {
     const service = new FirebaseAuthService();
-    const user = await service.signInGoogle();
-    commit('SET_USER_DATA', user.user);
+    return service.signInGoogle()
+      .then(({ user }) => commit('SET_USER_DATA', user))
+      .catch(e => Promise.reject(e));
   },
 };
 
@@ -29,7 +34,7 @@ export const mutations = {
   UPDATE_PASSWORD(state: State, value: string) {
     state.password = value;
   },
-  SET_USER_DATA(state: State, user: firebase.User) {
+  SET_USER_DATA(state: State, user: User) {
     state.name = user.displayName || user.email || '';
     state.email = user.email || '';
   },

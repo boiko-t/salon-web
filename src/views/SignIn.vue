@@ -94,14 +94,22 @@ export default class SignIn extends Vue {
     return true;
   }
 
-  onSignIn() {
+  async onSignIn() {
     if (this.valid) {
-      this.$store.dispatch('auth/signIn');
+      this.$store.dispatch('auth/signIn')
+        .then(() => this.$router.push('/'))
+        .catch(({ message }) => this.showError(message));
     }
   }
 
   onSignInGoogle() {
-    this.$store.dispatch('auth/signInGoogle');
+    this.$store.dispatch('auth/signInGoogle')
+      .then(() => this.$router.push('/'))
+      .catch(({ message }) => this.showError(message));
+  }
+
+  showError(error) {
+    this.$toast.error(error);
   }
 }
 </script>

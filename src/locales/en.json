@@ -1,5 +1,6 @@
 {
   "appName": "Salon",
+  "unknownUserName": "Unknown User",
   "emailLabel": "Email",
   "passwordLabel": "Password",
   "signInLabel": "Sign in",
