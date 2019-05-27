@@ -8,9 +8,9 @@
           xs12
         >
           <v-text-field
-            v-model="name"
-            :rules="[validateName]"
-            :label="$t('nameLabel')"
+            v-model="email"
+            :rules="[validateEmail]"
+            :label="$t('emailLabel')"
             required
           ></v-text-field>
         </v-flex>
@@ -39,13 +39,13 @@
           <v-btn
             :disabled="!valid"
             color="success"
-            @click="signIn"
+            @click="onSignIn"
           >
             {{$t('signInLabel')}}
           </v-btn>
           <v-btn
             color="#fff"
-            @click="signInGoogle"
+            @click="onSignInGoogle"
           >
             <img src="../assets/icons/google.svg" alt="Google logo">
             {{$t('signInGoogleLabel')}}
@@ -60,21 +60,29 @@
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component({
-  components: {
+  computed: {
+    email: {
+      get() { return this.$store.state.auth.email; },
+      set(value) { this.$store.commit('auth/UPDATE_EMAIL', value); },
+    },
+    password: {
+      get() { return this.$store.state.auth.password; },
+      set(value) { this.$store.commit('auth/UPDATE_PASSWORD', value); },
+    },
   },
 })
 
 export default class SignIn extends Vue {
   valid: boolean = true;
-  name: string = '123456';
-  password: string = '1';
+  email!: string;
+  password!: string;
 
-  validateName(input: string) {
+  validateEmail(input: string) {
     if (input.length === 0) {
-      return this.$t('nameRequiredErrorMessage');
+      return this.$t('emailRequiredErrorMessage');
     }
-    if (input.length >= 10) {
-      return this.$t('nameLengthErrorMessage');
+    if (input.length >= 20) {
+      return this.$t('emailLengthErrorMessage');
     }
     return true;
   }
@@ -86,16 +94,14 @@ export default class SignIn extends Vue {
     return true;
   }
 
-  signIn() {
-    if (!this.valid) {
-      console.warn('not valid');
+  onSignIn() {
+    if (this.valid) {
+      this.$store.dispatch('auth/signIn');
     }
   }
 
-  signInGoogle() {
-    if (!this.valid) {
-      console.warn('not valid');
-    }
+  onSignInGoogle() {
+    this.$store.dispatch('auth/signInGoogle');
   }
 }
 </script>

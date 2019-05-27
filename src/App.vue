@@ -41,7 +41,7 @@
             <v-list class="pa-1">
                 <v-list-tile avatar>
                     <v-list-tile-avatar>
-                        <img src="https://randomuser.me/api/portraits/women/10.jpg">
+                        J
                     </v-list-tile-avatar>
 
                     <v-list-tile-content>
@@ -90,6 +90,7 @@ export default {
       items: [
         { to: '/', title: 'Home', icon: 'dashboard' },
         { to: '/about', title: 'About', icon: 'question_answer' },
+        { to: '/sign-in', title: 'Sign in', icon: 'account_box' },
       ],
     };
   },
