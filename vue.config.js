@@ -1,4 +1,13 @@
+const fs = require('fs');
+
 module.exports = {
+  devServer: {
+    // https: true,
+    https: {
+      key: fs.readFileSync('certs/server.key'),
+      cert: fs.readFileSync('certs/server.crt'),
+    },
+  },
   pluginOptions: {
     i18n: {
       locale: 'en',
