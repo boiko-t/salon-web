@@ -16,8 +16,8 @@ messaging.setBackgroundMessageHandler((payload) => {
   // Customize notification here
   const notificationTitle = 'Background Message Title';
   const notificationOptions = {
-    body: 'Background Message body.',
-    icon: 'https://cdn0.iconfinder.com/data/icons/essentials-solid/100/Notification-512.png',
+    body: payload.data.body,
+    icon: '/notification.png',
   };
 
   return self.registration.showNotification(notificationTitle,

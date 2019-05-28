@@ -8,9 +8,10 @@
     </v-app>
 </template>
 
-<script>
-import * as firebase from 'firebase';
+<script lang="ts">
 import CoreMenu from '@/components/CoreMenu.vue';
+import FirebaseNotificationService from '@/services/FirebaseNotificationService';
+import { Notification } from '@/services/types/Notification';
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component({
@@ -19,24 +20,13 @@ import { Component, Vue } from 'vue-property-decorator';
   },
 
   mounted() {
-    const messaging = firebase.messaging();
-
-    messaging
-      .requestPermission()
-      .then(() => {
-        console.log('Notification permission granted.');
-        messaging.getToken()
-          .then(e => console.log(`token ${e}`));
-      })
-      .catch((err) => {
-        console.log('Unable to get permission to notify.', err);
-      });
-
-    messaging.onMessage((payload) => {
-      console.log('Message received. ', payload);
-    });
+    const notificationService = new FirebaseNotificationService();
+    notificationService.subscribe(this.handleForegroundNotification);
   },
 })
 export default class App extends Vue {
+  handleForegroundNotification(notification: Notification) {
+    this.$toast.info(notification.getBody());
+  }
 }
 </script>
