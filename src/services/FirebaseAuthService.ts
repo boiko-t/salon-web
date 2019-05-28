@@ -7,8 +7,11 @@ import UserCredential = firebase.auth.UserCredential;
 
 export default class FirebaseAuthService implements AuthService<UserCredential> {
   async signIn(login: string, password: string): Promise<UserCredential> {
-    return firebase.auth().signInWithEmailAndPassword(login, password)
-      .catch(e => Promise.reject(e));
+    try {
+      return await firebase.auth().signInWithEmailAndPassword(login, password);
+    } catch (e) {
+      return Promise.reject(e);
+    }
   }
 
   async signInGoogle(): Promise<UserCredential> {

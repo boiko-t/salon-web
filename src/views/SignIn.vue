@@ -78,11 +78,15 @@ export default class SignIn extends Vue {
   password!: string;
 
   validateEmail(input: string) {
+    const regexp = new RegExp('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$');
     if (input.length === 0) {
       return this.$t('emailRequiredErrorMessage');
     }
     if (input.length >= 20) {
       return this.$t('emailLengthErrorMessage');
+    }
+    if (!regexp.test(input)) {
+      return this.$t('emailFormatErrorMessage');
     }
     return true;
   }
@@ -94,7 +98,7 @@ export default class SignIn extends Vue {
     return true;
   }
 
-  async onSignIn() {
+  onSignIn() {
     if (this.valid) {
       this.$store.dispatch('auth/signIn')
         .then(() => this.$router.push('/'))
