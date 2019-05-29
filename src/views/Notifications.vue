@@ -101,7 +101,7 @@ export default {
   data: () => ({
     headers: [
       {
-        sortable: false,
+        sortable: true,
         text: 'Name',
         value: 'name',
       },

@@ -1,5 +1,5 @@
 import { Module } from 'vuex';
-import { RootState } from '../../types';
+import RootState from '../../types';
 import * as firebase from 'firebase/app';
 import FirebaseAuthService from '@/services/FirebaseAuthService';
 

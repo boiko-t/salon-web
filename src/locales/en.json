@@ -8,5 +8,7 @@
   "emailRequiredErrorMessage": "Email is required",
   "emailLengthErrorMessage": "Email must be less than 20 characters",
   "emailFormatErrorMessage": "Email is not valid",
-  "passwordLengthErrorMessage": "Password must be more than 6 characters"
+  "passwordLengthErrorMessage": "Password must be more than 6 characters",
+
+  "actionDetails": "Details"
 }

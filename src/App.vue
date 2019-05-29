@@ -25,7 +25,7 @@ import * as firebase from 'firebase';
     notificationService.subscribe(this.handleForegroundNotification);
 
     const database = firebase.database();
-    database.ref('products/products1').set({
+    database.ref('products/products2').set({
       name: 'Loreal Paris',
       description: 'Lorem',
     });
