@@ -120,7 +120,6 @@ export default class CoreMenu extends Vue {
     ];
 
     openDrawer() {
-      console.log(this.$t('unknownUserName'));
       this.drawer = !this.drawer;
     }
 }

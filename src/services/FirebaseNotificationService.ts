@@ -12,6 +12,8 @@ export default class FirebaseNotificationService implements NotificationService 
         console.log('Unable to get permission to notify.', error);
       });
 
+    messaging.getToken()
+      .then(e => console.log(e));
     messaging.onMessage((payload) => {
       handler(new Notification(payload.data.title, payload.data.body));
     });

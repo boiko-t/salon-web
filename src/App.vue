@@ -13,6 +13,7 @@ import CoreMenu from '@/components/CoreMenu.vue';
 import FirebaseNotificationService from '@/services/FirebaseNotificationService';
 import { Notification } from '@/services/types/Notification';
 import { Component, Vue } from 'vue-property-decorator';
+import * as firebase from 'firebase';
 
 @Component({
   components: {
@@ -22,6 +23,13 @@ import { Component, Vue } from 'vue-property-decorator';
   mounted() {
     const notificationService = new FirebaseNotificationService();
     notificationService.subscribe(this.handleForegroundNotification);
+
+    const database = firebase.database();
+    database.ref('products/products1').set({
+      name: 'Loreal Paris',
+      description: 'Lorem',
+    });
+    // database.ref('/categories').on('value', snapshot => console.log(snapshot.val()));
   },
 })
 export default class App extends Vue {
