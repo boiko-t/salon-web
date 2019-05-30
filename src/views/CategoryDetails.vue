@@ -4,6 +4,19 @@
             fluid
             grid-list-xl
     >
+      <v-layout
+        justify-center
+      >
+        <v-flex md10
+                xs12
+        >
+          <v-img
+            src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
+            height="300px"
+          ></v-img>
+            <h3 class="headline ma-0">{{1}}</h3>
+        </v-flex>
+      </v-layout>
     </v-container>
 </template>
 
@@ -19,7 +32,7 @@ import { Category } from '@/entities/index';
     },
     isEditMode() {
       return !!this.$route.params.edit;
-    }
+    },
   },
   mounted() {
     this.init();
@@ -27,8 +40,10 @@ import { Category } from '@/entities/index';
 })
 export default class Categories extends Vue {
   category!: Category;
+  id!: number;
 
   init() {
+    this.$store.dispatch('categories/delete', this.id);
   }
 }
 </script>
