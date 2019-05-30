@@ -14,7 +14,8 @@
             src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
             height="300px"
           ></v-img>
-            <h3 class="headline ma-0">{{1}}</h3>
+          <h3 class="headline ma-0">{{category.name}}</h3>
+          <div>{{category.description}}</div>
         </v-flex>
       </v-layout>
     </v-container>
@@ -27,6 +28,7 @@ import { Category } from '@/entities/index';
 
 @Component({
   computed: {
+    ...mapState('categories', { category: 'categoryDetailed' }),
     id() {
       return this.$route.params.id;
     },
@@ -35,16 +37,13 @@ import { Category } from '@/entities/index';
     },
   },
   mounted() {
-    this.init();
+    this.$store.dispatch('categories/getCategoryById', this.id);
   },
 })
-export default class Categories extends Vue {
+export default class CategoryDetailed extends Vue {
   category!: Category;
-  id!: number;
-
-  init() {
-    this.$store.dispatch('categories/delete', this.id);
-  }
+  id!: string;
+  editMode!: boolean;
 }
 </script>
 <style lang="scss">

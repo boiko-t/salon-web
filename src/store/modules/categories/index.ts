@@ -1,4 +1,4 @@
-import { Module } from 'vuex';
+import { Module, Action } from 'vuex';
 import { Category } from '@/entities/index';
 import * as firebase from 'firebase/app';
 import RootState from '../../types';
@@ -8,13 +8,21 @@ import DataSnapshot = firebase.database.DataSnapshot;
 
 class State {
   categories: Category[] = [];
+  categoryDetailed: Category;
 }
 
 export const actions = {
-  initCollection({ state, commit }: { state: State, commit: any }) {
+  initCollection({ commit }: { commit: any }) {
     const service = new FirebaseDatabaseService();
     service.setDataListener('categories', (data: DataSnapshot) => {
       commit('SET_COLLECTIONS', data.val());
+    });
+  },
+
+  getCategoryById({ state, commit }: { state: State, commit: any }, id: string) {
+    const service = new FirebaseDatabaseService();
+    service.setDataListener(`categories/${id}`, (data: DataSnapshot) => {
+      commit('SET_CATEGORY_DETAILED', { data: data.val(), id });
     });
   },
 
@@ -25,8 +33,12 @@ export const actions = {
 };
 
 export const mutations = {
+  SET_CATEGORY_DETAILED(state: State, { data, id }: { data: any, id: string}) {
+    state.categoryDetailed = new Category(id, data.name, data.description);
+  },
+
   SET_COLLECTIONS(state: State, data: any) {
-    const dataKeys = Object.keys(data);
+    const dataKeys = Object.keys(data) || [];
     dataKeys.forEach((key) => {
       const updatedItem = state.categories.find(item => item.getId() === key);
       if (updatedItem) {
