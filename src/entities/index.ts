@@ -10,24 +10,61 @@ export class Category {
     this.description = description;
   }
 
-  setName(value: string) {
+  public setName(value: string) {
     this.name = value;
   }
 
-  setDescription(value: string) {
+  public setDescription(value: string) {
     this.description = value;
   }
 
-  getId() {
+  public setProductsCollection(value: Product[]) {
+    this.products = value;
+  }
+
+  public addProduct(value: Product) {
+    this.products.push(value);
+  }
+
+  public getId() {
     return this.id;
+  }
+
+  public getName() {
+    return this.name;
+  }
+
+  public getDescription() {
+    return this.description;
+  }
+
+  public getProducts() {
+    return this.products;
+  }
+
+  public toJson() {
+    return {
+      name: this.name,
+      description: this.description,
+    };
   }
 }
 
-export interface Product {
+export class Product {
   id: string;
   collectionId: string;
   name: string;
   description: string;
   price: string;
   unit: string;
+
+  constructor(id: string, collectionId: string, name: string,
+    description: string, price: string, unit: string) {
+    this.id = id;
+    this.collectionId = collectionId;
+    this.name = name;
+    this.description = description;
+    this.price = price;
+    this.unit = unit;
+  }
 }

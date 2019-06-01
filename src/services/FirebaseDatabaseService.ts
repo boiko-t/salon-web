@@ -12,6 +12,11 @@ export default class FirebaseDatabaseService {
       .on('value', updateHandler);
   }
 
+  updateData(path: string, newData: object) {
+    this.database.ref(path)
+      .set(newData);
+  }
+
   deleteData(path: string) {
     this.database.ref(path).remove();
   }
