@@ -50,21 +50,46 @@ export class Category {
   }
 }
 
+export class CategoryPreview {
+  id: string;
+  name: string;
+
+  constructor(id: string, name: string) {
+    this.id = id;
+    this.name = name;
+  }
+}
+
+export enum Unit {
+  Mililiter = 'ml',
+  Gram = 'gr',
+}
+
 export class Product {
   id: string;
-  collectionId: string;
+  categoryId: string;
   name: string;
   description: string;
   price: string;
   unit: string;
 
-  constructor(id: string, collectionId: string, name: string,
+  constructor(id: string, categoryId: string, name: string,
     description: string, price: string, unit: string) {
     this.id = id;
-    this.collectionId = collectionId;
+    this.categoryId = categoryId;
     this.name = name;
     this.description = description;
     this.price = price;
     this.unit = unit;
+  }
+
+  toJson() {
+    return {
+      category: this.categoryId,
+      name: this.name,
+      description: this.description,
+      price: this.price,
+      unit: this.unit,
+    };
   }
 }

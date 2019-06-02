@@ -3,6 +3,7 @@ import Vuex, { StoreOptions } from 'vuex';
 import RootState from './types';
 import { auth } from './modules/auth/index';
 import { categories } from './modules/categories/index';
+import { products } from './modules/products/index';
 
 Vue.use(Vuex);
 
@@ -13,6 +14,7 @@ const store: StoreOptions<RootState> = {
   modules: {
     auth,
     categories,
+    products,
   },
 };
 export default new Vuex.Store(store);

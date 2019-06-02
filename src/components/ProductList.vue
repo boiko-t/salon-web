@@ -27,7 +27,9 @@
           slot="items"
           slot-scope="{ item }"
         >
-          <td>{{ item.name }}</td>
+          <router-link :to="`/products/${item.id}`">
+            <td>{{ item.name }}</td>
+          </router-link>
           <td>{{ item.description }}</td>
           <td class="">{{ item.price }}</td>
         </template>

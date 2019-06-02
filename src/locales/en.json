@@ -10,10 +10,14 @@
   "emailFormatErrorMessage": "Email is not valid",
   "passwordLengthErrorMessage": "Password must be more than 6 characters",
 
+  "currency": "₴",
   "productListTitle": "Products",
   "productName": "Name",
   "productDescription": "Description",
   "productPrice": "Price",
+  "priceLabel": "Price",
+  "unitLabel": "Unit",
+  "categoryLabel": "Category",
 
   "actionDetails": "Details",
   "actionSaveEdit": "Save",
