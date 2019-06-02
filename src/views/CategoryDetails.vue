@@ -60,19 +60,25 @@
             <h3 class="headline ma-0">{{category.name}}</h3>
             <div>{{category.description}}</div>
           </div>
+          <product-list :products="productList"/>
         </v-flex>
       </v-layout>
     </v-container>
 </template>
 
 <script lang="ts">
-import { mapState } from 'vuex';
 import { Component, Vue } from 'vue-property-decorator';
 import { Category } from '@/entities/index';
+import ProductList from '@/components/ProductList.vue';
 
 @Component({
+  components: {
+    ProductList,
+  },
   computed: {
-    // ...mapState('categories', { category: 'categoryDetails' }),
+    productList() {
+      return this.$store.state.categories.productList || [];
+    },
     category: {
       get() {
         return this.$store.state.categories.categoryDetails || {};

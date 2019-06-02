@@ -10,6 +10,11 @@
   "emailFormatErrorMessage": "Email is not valid",
   "passwordLengthErrorMessage": "Password must be more than 6 characters",
 
+  "productListTitle": "Products",
+  "productName": "Name",
+  "productDescription": "Description",
+  "productPrice": "Price",
+
   "actionDetails": "Details",
   "actionSaveEdit": "Save",
   "actionCancelEdit": "Discard",

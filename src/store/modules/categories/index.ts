@@ -9,6 +9,7 @@ import DataSnapshot = firebase.database.DataSnapshot;
 class State {
   categories: Category[] = [];
   categoryDetails: Category = new Category('', '', '');
+  productList: Product[] = [];
 }
 
 export const actions = {
@@ -25,7 +26,6 @@ export const actions = {
       commit('SET_CATEGORY_DETAILED', { data: data.val(), id });
     });
     service.setDataListener('products', (data: DataSnapshot) => {
-      // const products = data.val().filter(item => item.categoryId === id);
       commit('SET_CATEGORY_DETAILED_PRODUCTS', { data: data.val(), id });
     });
   },
@@ -47,17 +47,15 @@ export const mutations = {
   },
 
   SET_CATEGORY_DETAILED_PRODUCTS(state: State, { data, id }: { data: any, id: string}) {
-    // state.categoryDetails = new Category(id, data.name, data.description);
     const dataKeys = Object.keys(data) || [];
     const products = [];
     dataKeys.forEach((key) => {
-      // const product = data.filter(item => item.categoryId === id);
       if (data[key].category === id) {
         products.push(new Product(key, id, data[key].name,
           data[key].description, data[key].price, data[key].unit));
       }
     });
-    state.categoryDetails.setProductsCollection(products);
+    state.productList = [...products];
   },
 
   SET_COLLECTIONS(state: State, data: any) {
