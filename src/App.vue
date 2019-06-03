@@ -28,14 +28,26 @@ import * as firebase from 'firebase';
     const notificationService = new FirebaseNotificationService();
     notificationService.subscribe(this.handleForegroundNotification);
 
-    if (!this.$store.state.auth.name) {
-      this.$router.push('sign-in');
-    }
+    this.redirectAuth();
+
+    this.$router.beforeEach((to, from, next) => {
+      if (!this.$store.state.auth.name) {
+        this.$router.push('sign-in');
+      } else {
+        next();
+      }
+    });
   },
 })
 export default class App extends Vue {
   handleForegroundNotification(notification: Notification) {
     this.$toast.info(notification.getBody());
+  }
+
+  redirectAuth() {
+    if (!this.$store.state.auth.name) {
+      this.$router.push('sign-in');
+    }
   }
 }
 </script>
