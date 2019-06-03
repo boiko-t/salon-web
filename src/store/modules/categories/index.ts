@@ -8,7 +8,7 @@ import DataSnapshot = firebase.database.DataSnapshot;
 
 class State {
   categories: Category[] = [];
-  categoryDetails: Category = new Category('', '', '');
+  categoryDetails: Category = new Category('', '', '', '');
   productList: Product[] = [];
 }
 
@@ -43,7 +43,7 @@ export const actions = {
 
 export const mutations = {
   SET_CATEGORY_DETAILED(state: State, { data, id }: { data: any, id: string}) {
-    state.categoryDetails = new Category(id, data.name, data.description);
+    state.categoryDetails = new Category(id, data.name, data.description, data.imageUrl);
   },
 
   SET_CATEGORY_DETAILED_PRODUCTS(state: State, { data, id }: { data: any, id: string}) {
@@ -66,7 +66,7 @@ export const mutations = {
         updatedItem.setName(data[key].name);
         updatedItem.setDescription(data[key].description);
       } else {
-        state.categories.push(new Category(key, data[key].name, data[key].description));
+        state.categories.push(new Category(key, data[key].name, data[key].description, ''));
       }
     });
     if (dataKeys.length !== state.categories.length) {

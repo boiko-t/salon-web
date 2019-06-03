@@ -1,13 +1,15 @@
 export class Category {
   private id: string;
   private name: string;
+  private imageUrl: string;
   private description: string;
   private products: Product[];
 
-  constructor(id: string, name: string, description: string) {
+  constructor(id: string, name: string, description: string, imageUrl: string) {
     this.id = id;
     this.name = name;
     this.description = description;
+    this.imageUrl = imageUrl;
   }
 
   public setName(value: string) {
@@ -73,8 +75,7 @@ export class Product {
   price: string;
   unit: string;
 
-  constructor(id: string, categoryId: string, name: string,
-    description: string, price: string, unit: string) {
+  constructor(id: string, categoryId: string, name: string, description: string, price: string, unit: string) {
     this.id = id;
     this.categoryId = categoryId;
     this.name = name;

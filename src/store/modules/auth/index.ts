@@ -1,7 +1,8 @@
 import { Module } from 'vuex';
-import RootState from '../../types';
 import * as firebase from 'firebase/app';
 import FirebaseAuthService from '@/services/FirebaseAuthService';
+import { reject, resolve } from 'q';
+import RootState from '../../types';
 
 import User = firebase.User;
 
@@ -12,11 +13,22 @@ class State {
 }
 
 export const actions = {
+  isUserAuth({ commit }: { commit: any }) {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        commit('SET_USER_DATA', user);
+      }
+    });
+  },
+
   async signIn({ state, commit }: {state: State, commit: any}) {
     const service = new FirebaseAuthService();
-    return service.signIn(state.email, state.password)
-      .then(({ user }) => commit('SET_USER_DATA', user))
-      .catch(e => Promise.reject(e));
+    try {
+      const { user } = await service.signIn(state.email, state.password);
+      commit('SET_USER_DATA', user);
+    } catch (error) {
+      Promise.reject(error);
+    }
   },
 
   async signInGoogle({ commit }: {commit: any}) {

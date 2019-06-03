@@ -40,8 +40,9 @@
             </v-btn>
           </v-layout>
           <v-img
-            src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
+            :src="category.imageUrl"
             height="300px"
+            contain
           ></v-img>
           <div
             v-if="editMode"
@@ -91,7 +92,7 @@ import ProductList from '@/components/ProductList.vue';
       return this.$route.params.id;
     },
     buffer() {
-      const result = new Category('', '', '');
+      const result = new Category('', '', '', '');
       result.setName(this.category.getName());
       result.setDescription(this.category.getDescription());
       return result;

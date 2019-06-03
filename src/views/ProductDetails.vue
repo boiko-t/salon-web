@@ -109,40 +109,40 @@ import { Component, Vue } from 'vue-property-decorator';
 import { Product, Unit } from '@/entities/index';
 import MaterialCard from '@/components/MaterialCard.vue';
 
-  @Component({
-    components: {
-      MaterialCard,
-    },
-    computed: {
-      ...mapState('products', ['categoryList']),
-      product: {
-        get() {
-          return this.$store.state.products.product;
-        },
-        set(value) {
-          this.product = value;
-        },
+@Component({
+  components: {
+    MaterialCard,
+  },
+  computed: {
+    ...mapState('products', ['categoryList']),
+    product: {
+      get() {
+        return this.$store.state.products.product;
       },
-      id() {
-        return this.$route.params.id;
-      },
-      buffer() {
-        const result = {};
-        Object.assign(result, this.product);
-        return result;
-      },
-      categoryCaption() {
-        if (this.categoryList.length) {
-          return this.categoryList.find(item => item.id === this.product.categoryId).name;
-        }
-        return '';
+      set(value) {
+        this.product = value;
       },
     },
-    mounted() {
-      this.$store.dispatch('products/getProductById', this.id);
-      this.$store.dispatch('products/getCategories');
+    id() {
+      return this.$route.params.id;
     },
-  })
+    buffer() {
+      const result = {};
+      Object.assign(result, this.product);
+      return result;
+    },
+    categoryCaption() {
+      if (this.categoryList.length) {
+        return this.categoryList.find(item => item.id === this.product.categoryId).name;
+      }
+      return '';
+    },
+  },
+  mounted() {
+    this.$store.dispatch('products/getProductById', this.id);
+    this.$store.dispatch('products/getCategories');
+  },
+})
 export default class ProductDetails extends Vue {
     public editMode: boolean = false;
     public product!: Product;

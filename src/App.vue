@@ -20,16 +20,17 @@ import * as firebase from 'firebase';
     CoreMenu,
   },
 
+  beforeMount() {
+    this.$store.dispatch('auth/isUserAuth');
+  },
+
   mounted() {
     const notificationService = new FirebaseNotificationService();
     notificationService.subscribe(this.handleForegroundNotification);
 
-    const database = firebase.database();
-    database.ref('products/products2').set({
-      name: 'Loreal Paris',
-      description: 'Lorem',
-    });
-    // database.ref('/categories').on('value', snapshot => console.log(snapshot.val()));
+    if (!this.$store.state.auth.name) {
+      this.$router.push('sign-in');
+    }
   },
 })
 export default class App extends Vue {

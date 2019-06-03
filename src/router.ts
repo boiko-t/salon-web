@@ -5,6 +5,7 @@ import SignIn from './views/SignIn.vue';
 import Notifications from './views/Notifications.vue';
 import Categories from './views/Categories.vue';
 import CategoryDetails from './views/CategoryDetails.vue';
+import CategoryCreate from './views/CategoryCreate.vue';
 import ProductDetails from './views/ProductDetails.vue';
 
 Vue.use(Router);
@@ -41,6 +42,11 @@ export default new Router({
       path: '/categories/:id/:edit',
       name: 'category',
       component: CategoryDetails,
+    },
+    {
+      path: '/new-category',
+      name: 'new-category',
+      component: CategoryCreate,
     },
     {
       path: '/products/:id',
