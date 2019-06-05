@@ -1,7 +1,6 @@
 import { Module } from 'vuex';
 import * as firebase from 'firebase/app';
 import FirebaseAuthService from '@/services/FirebaseAuthService';
-import { reject, resolve } from 'q';
 import RootState from '../../types';
 
 import User = firebase.User;

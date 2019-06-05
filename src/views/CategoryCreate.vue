@@ -13,11 +13,19 @@
           <v-layout
             justify-center
           >
-            <img
-              class="upload-image"
-              src="../assets/icons/upload-image.png"
-              height="300px"
-            />
+            <label>
+              <input
+                type="file"
+                accept="image/*"
+                ref="imageUploadInput"
+                @change="onFileUpload"
+                id="fileUpload"/>
+              <img
+                class="upload-image"
+                :src="imageUrl"
+                height="300px"
+              />
+            </label>
           </v-layout>
           <div>
             <v-text-field
@@ -47,16 +55,26 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { Category } from '@/entities/index';
 
+import PLACEHOLDER_IMAGE from '@/assets/icons/upload-image.png';
+
 @Component({
   computed: {
     imageUrl() {
-      return this.category.imageUrl || '';
+      return this.category.imageUrl || PLACEHOLDER_IMAGE;
     },
   },
 })
 export default class CategoryCrete extends Vue {
   public category: Category = new Category('1', 'jdj', 'ddd', '');
   id!: string;
+
+  onFileUpload() {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(this.$refs.imageUploadInput.files[0]);
+    fileReader.addEventListener('load', (e) => {
+      this.category.imageUrl = e.target.result;
+    });
+  }
 
   onEditSave() {
     this.$store.dispatch('categories/create', this.category);
@@ -66,10 +84,16 @@ export default class CategoryCrete extends Vue {
 <style lang="scss">
   .upload-image {
     padding: 0 30px;
-    border-radius: 10px;
+    border-radius: 2px;
     cursor: pointer;
+    transition: box-shadow .1s linear;
+
     &:hover {
       @include shadow-2dp-color(#212121);
     }
+  }
+
+  #fileUpload {
+    display: none;
   }
 </style>

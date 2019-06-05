@@ -35,6 +35,12 @@ export const actions = {
     service.updateData(`categories/${state.categoryDetails.getId()}`, state.categoryDetails.toJson());
   },
 
+  create({ state }: { state: State }, category: Category) {
+    const service = new FirebaseDatabaseService();
+    service.create('categories', category.toJson())
+      .then(e=> {console.log(e);});
+  },
+
   delete({ state }: { state: State }, id: string) {
     const service = new FirebaseDatabaseService();
     service.deleteData(`categories/${id}`);
