@@ -5,6 +5,10 @@ import 'firebase/storage';
 export default class FirebaseStorageService {
   storage = firebase.storage();
 
+  removeFile(name: string) {
+    return this.storage.ref(name).delete();
+  }
+
   uploadFile(name: string, imageData: string) {
     return this.storage.ref(name)
       .putString(imageData, 'data_url')

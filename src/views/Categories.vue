@@ -3,7 +3,21 @@
             fill-height
             fluid
             grid-list-xl
+            class="pr-45"
     >
+    <v-fab-transition>
+                <v-btn
+                  color="success"
+                  dark
+                  fixed
+                  bottom
+                  right
+                  fab
+                  to="new-category"
+                >
+                  <v-icon>add</v-icon>
+                </v-btn>
+              </v-fab-transition>
         <v-layout
                 space-between
                 wrap
@@ -12,7 +26,8 @@
                     :key="category.id"
                     lg4
                     md6
-                    xs9
+                    xs6
+                    xxs12
             >
                 <v-card>
                     <v-img
@@ -25,7 +40,7 @@
                     <v-card-title primary-title>
                         <div>
                             <h3 class="headline ma-0">{{category.name}}</h3>
-                            <p class="category-description">{{category.description}}</p>
+                            <p class="white-space">{{category.description}}</p>
                         </div>
                     </v-card-title>
 
@@ -82,7 +97,4 @@ export default class Categories extends Vue {
 }
 </script>
 <style lang="scss">
-.category-description {
-    white-space: pre;
-}
 </style>

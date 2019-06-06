@@ -59,7 +59,7 @@
           <div
             v-else>
             <h3 class="headline ma-0">{{category.name}}</h3>
-            <div>{{category.description}}</div>
+            <div class="white-space">{{category.description}}</div>
           </div>
           <product-list :products="productList"/>
         </v-flex>

@@ -39,23 +39,31 @@ export const actions = {
   create({ state }: { state: State }, category: Category) {
     const dbService = new FirebaseDatabaseService();
     const storageService = new FirebaseStorageService();
-    const id = dbService.create('categories', 'category', category.toJson());
-    storageService.uploadFile(`categories/${id}`, category.getImageUrl())
-      .then((url) => {
-        category.setImageUrl(url);
-        dbService.updateData(`categories/${id}`, category.toJsonUrl())
+    return dbService.create('categories', 'category', category.toJson())
+      .then((id) => {
+        storageService.uploadFile(`categories/${id}`, category.getImageUrl())
+          .then((url) => {
+            category.setImageUrl(url);
+            dbService.updateData(`categories/${id}`, category.toJsonUrl())
+          });
+        return Promise.resolve(id)
       });
   },
 
   delete({ state }: { state: State }, id: string) {
-    const service = new FirebaseDatabaseService();
-    service.deleteData(`categories/${id}`);
+    const dbService = new FirebaseDatabaseService();
+    const storageService = new FirebaseStorageService();
+    const itemId = `categories/${id}`;
+    dbService.deleteData(itemId);
+    storageService.removeFile(itemId);
   },
 };
 
 export const mutations = {
   SET_CATEGORY_DETAILED(state: State, { data, id }: { data: any, id: string}) {
-    state.categoryDetails = new Category(id, data.name, data.description, data.imageUrl);
+    if (data) {
+      state.categoryDetails = new Category(id, data.name, data.description, data.imageUrl);
+    }
   },
 
   SET_CATEGORY_DETAILED_PRODUCTS(state: State, { data, id }: { data: any, id: string}) {
