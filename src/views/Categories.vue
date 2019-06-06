@@ -16,14 +16,16 @@
             >
                 <v-card>
                     <v-img
-                            src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
+                            :src="category.imageUrl"
                             aspect-ratio="2.75"
+                            height="250px"
+                            contain
                     ></v-img>
 
                     <v-card-title primary-title>
                         <div>
                             <h3 class="headline ma-0">{{category.name}}</h3>
-                            <div>{{category.description}}</div>
+                            <p class="category-description">{{category.description}}</p>
                         </div>
                     </v-card-title>
 
@@ -80,4 +82,7 @@ export default class Categories extends Vue {
 }
 </script>
 <style lang="scss">
+.category-description {
+    white-space: pre;
+}
 </style>

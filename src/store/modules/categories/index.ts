@@ -5,6 +5,7 @@ import RootState from '../../types';
 import FirebaseDatabaseService from '@/services/FirebaseDatabaseService';
 
 import DataSnapshot = firebase.database.DataSnapshot;
+import FirebaseStorageService from '@/services/FirebaseStorageService';
 
 class State {
   categories: Category[] = [];
@@ -36,9 +37,14 @@ export const actions = {
   },
 
   create({ state }: { state: State }, category: Category) {
-    const service = new FirebaseDatabaseService();
-    service.create('categories', category.toJson())
-      .then(e=> {console.log(e);});
+    const dbService = new FirebaseDatabaseService();
+    const storageService = new FirebaseStorageService();
+    const id = dbService.create('categories', 'category', category.toJson());
+    storageService.uploadFile(`categories/${id}`, category.getImageUrl())
+      .then((url) => {
+        category.setImageUrl(url);
+        dbService.updateData(`categories/${id}`, category.toJsonUrl())
+      });
   },
 
   delete({ state }: { state: State }, id: string) {
@@ -69,10 +75,11 @@ export const mutations = {
     dataKeys.forEach((key) => {
       const updatedItem = state.categories.find(item => item.getId() === key);
       if (updatedItem) {
+        updatedItem.setImageUrl(data[key].imageUrl);
         updatedItem.setName(data[key].name);
         updatedItem.setDescription(data[key].description);
       } else {
-        state.categories.push(new Category(key, data[key].name, data[key].description, ''));
+        state.categories.push(new Category(key, data[key].name, data[key].description, data[key].imageUrl));
       }
     });
     if (dataKeys.length !== state.categories.length) {

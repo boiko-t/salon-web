@@ -17,12 +17,13 @@ export default class FirebaseDatabaseService {
       .set(newData);
   }
 
-  create(path: string, data: object) {
-    const newItemKey = firebase.database().ref().child(path).push().key;
+  create(path: string, itemIdPrefix: string, data: object): string {
+    const newItemKey = itemIdPrefix + firebase.database().ref().child(path).push().key;
     const updates = {};
     updates[`${path}/${newItemKey}`] = data;
-    return this.database.ref()
+    this.database.ref()
       .update(updates);
+    return newItemKey;
   }
 
   deleteData(path: string) {

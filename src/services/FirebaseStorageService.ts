@@ -5,7 +5,12 @@ import 'firebase/storage';
 export default class FirebaseStorageService {
   storage = firebase.storage();
 
-  getFile(path: string) {
-    console.log(this.storage.ref().child('categories/category1.png'));
+  uploadFile(name: string, imageData: string) {
+    return this.storage.ref(name)
+      .putString(imageData, 'data_url')
+      .then((snapshot) => {
+        const { fullPath } = snapshot.metadata;
+        return this.storage.ref(fullPath).getDownloadURL();
+      });
   }
 }

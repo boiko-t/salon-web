@@ -32,10 +32,12 @@
               v-model="category.name"
               :label="$t('categoryNameLabel')"
               required></v-text-field>
-            <v-text-field
+            <v-textarea
               v-model="category.description"
+              :auto-grow="true"
+              :rows="2"
               :label="$t('categoryDescriptionLabel')"
-              required></v-text-field>
+              required></v-textarea>
           </div>
           <v-layout
             justify-end
@@ -83,7 +85,6 @@ export default class CategoryCrete extends Vue {
 </script>
 <style lang="scss">
   .upload-image {
-    padding: 0 30px;
     border-radius: 2px;
     cursor: pointer;
     transition: box-shadow .1s linear;

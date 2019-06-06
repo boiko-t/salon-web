@@ -20,6 +20,10 @@ export class Category {
     this.description = value;
   }
 
+  public setImageUrl(value: string) {
+    this.imageUrl = value;
+  }
+
   public setProductsCollection(value: Product[]) {
     this.products = value;
   }
@@ -44,10 +48,22 @@ export class Category {
     return this.products;
   }
 
+  public getImageUrl() {
+    return this.imageUrl;
+  }
+
   public toJson() {
     return {
       name: this.name,
       description: this.description,
+    };
+  }
+
+  public toJsonUrl() {
+    return {
+      name: this.name,
+      description: this.description,
+      imageUrl: this.imageUrl,
     };
   }
 }
