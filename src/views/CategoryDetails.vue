@@ -78,11 +78,11 @@ import ProductList from '@/components/ProductList.vue';
   },
   computed: {
     productList() {
-      return this.$store.state.categories.productList || [];
+      return this.$store.state.categories.productList;
     },
     category: {
       get() {
-        return this.$store.state.categories.categoryDetails || {};
+        return this.$store.state.categories.categoryDetails;
       },
       set(value) {
         this.category = value;
@@ -98,7 +98,7 @@ import ProductList from '@/components/ProductList.vue';
       return result;
     },
   },
-  mounted() {
+  beforeMount() {
     this.editMode = !!this.$route.params.edit;
     this.$store.dispatch('categories/getCategoryById', this.id);
   },

@@ -1,5 +1,6 @@
 {
   "appName": "Salon",
+  "pageNotFoundTitle": "Sorry, page not found 😢",
   "unknownUserName": "Unknown User",
   "emailLabel": "Email",
   "passwordLabel": "Password",
@@ -24,6 +25,7 @@
   "actionCancelEdit": "Discard",
   "categoryNameLabel": "Name",
   "categoryDescriptionLabel": "Description",
+  "categoryNotFound": "Sorry, category not found 😢",
 
   "categoryNameRequired": "Please enter name",
   "categoryNameLength": "Name is too long",

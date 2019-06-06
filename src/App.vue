@@ -13,7 +13,6 @@ import CoreMenu from '@/components/CoreMenu.vue';
 import FirebaseNotificationService from '@/services/FirebaseNotificationService';
 import { Notification } from '@/services/types/Notification';
 import { Component, Vue } from 'vue-property-decorator';
-import * as firebase from 'firebase';
 
 @Component({
   components: {
