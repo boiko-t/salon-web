@@ -3,9 +3,12 @@ import { Category, Product } from '@/entities/index';
 import * as firebase from 'firebase/app';
 import RootState from '../../types';
 import FirebaseDatabaseService from '@/services/FirebaseDatabaseService';
+import FirebaseStorageService from '@/services/FirebaseStorageService';
 
 import DataSnapshot = firebase.database.DataSnapshot;
-import FirebaseStorageService from '@/services/FirebaseStorageService';
+
+const CATEGORY_NODE_NAME = 'categories';
+const PRODUCT_NODE_NAME = 'products';
 
 class State {
   categories: Category[] = [];
@@ -16,44 +19,44 @@ class State {
 export const actions = {
   initCollection({ commit }: { commit: any }) {
     const service = new FirebaseDatabaseService();
-    service.setDataListener('categories', (data: DataSnapshot) => {
+    service.setDataListener(CATEGORY_NODE_NAME, (data: DataSnapshot) => {
       commit('SET_COLLECTIONS', data.val());
     });
   },
 
   getCategoryById({ state, commit }: { state: State, commit: any }, id: string) {
     const service = new FirebaseDatabaseService();
-    service.setDataListener(`categories/${id}`, (data: DataSnapshot) => {
+    service.setDataListener(`${CATEGORY_NODE_NAME}/${id}`, (data: DataSnapshot) => {
       commit('SET_CATEGORY_DETAILED', { data: data.val(), id });
     });
-    service.setDataListener('products', (data: DataSnapshot) => {
+    service.setDataListener(PRODUCT_NODE_NAME, (data: DataSnapshot) => {
       commit('SET_CATEGORY_DETAILED_PRODUCTS', { data: data.val(), id });
     });
   },
 
   updateCategoryDetailed({ state, commit }: { state: State, commit: any }) {
     const service = new FirebaseDatabaseService();
-    service.updateData(`categories/${state.categoryDetails.getId()}`, state.categoryDetails.toJson());
+    service.updateData(`${CATEGORY_NODE_NAME}/${state.categoryDetails.getId()}`, state.categoryDetails.toJsonUrl());
   },
 
   create({ state }: { state: State }, category: Category) {
     const dbService = new FirebaseDatabaseService();
     const storageService = new FirebaseStorageService();
-    return dbService.create('categories', 'category', category.toJson())
+    return dbService.create(CATEGORY_NODE_NAME, 'category', category.toJson())
       .then((id) => {
-        storageService.uploadFile(`categories/${id}`, category.getImageUrl())
+        storageService.uploadFile(`${CATEGORY_NODE_NAME}/${id}`, category.getImageUrl())
           .then((url) => {
             category.setImageUrl(url);
-            dbService.updateData(`categories/${id}`, category.toJsonUrl())
+            dbService.updateData(`${CATEGORY_NODE_NAME}/${id}`, category.toJsonUrl());
           });
-        return Promise.resolve(id)
+        return Promise.resolve(id);
       });
   },
 
   delete({ state }: { state: State }, id: string) {
     const dbService = new FirebaseDatabaseService();
     const storageService = new FirebaseStorageService();
-    const itemId = `categories/${id}`;
+    const itemId = `${CATEGORY_NODE_NAME}/${id}`;
     dbService.deleteData(itemId);
     storageService.removeFile(itemId);
   },
@@ -87,7 +90,8 @@ export const mutations = {
         updatedItem.setName(data[key].name);
         updatedItem.setDescription(data[key].description);
       } else {
-        state.categories.push(new Category(key, data[key].name, data[key].description, data[key].imageUrl));
+        state.categories
+          .push(new Category(key, data[key].name, data[key].description, data[key].imageUrl));
       }
     });
     if (dataKeys.length !== state.categories.length) {

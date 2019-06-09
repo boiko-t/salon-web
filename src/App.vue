@@ -14,28 +14,29 @@ import FirebaseNotificationService from '@/services/FirebaseNotificationService'
 import { Notification } from '@/services/types/Notification';
 import { Component, Vue } from 'vue-property-decorator';
 
+const SIGN_IN_PAGE = 'sign-in';
+
 @Component({
   components: {
     CoreMenu,
   },
 
-  beforeMount() {
-    this.$store.dispatch('auth/isUserAuth');
+  async beforeMount() {
+    const user = await this.$store.dispatch('auth/isUserAuth');
+    if (!user) this.$router.push(SIGN_IN_PAGE);
   },
 
   mounted() {
     const notificationService = new FirebaseNotificationService();
     notificationService.subscribe(this.handleForegroundNotification);
 
-    // this.redirectAuth();
-
-    // this.$router.beforeEach((to, from, next) => {
-    //   if (!this.$store.state.auth.name) {
-    //     this.$router.push('sign-in');
-    //   } else {
-    //     next();
-    //   }
-    // });
+    this.$router.beforeEach((to, from, next) => {
+      if (!this.isAuth() && to.path !== SIGN_IN_PAGE) {
+        next(SIGN_IN_PAGE);
+      } else {
+        next();
+      }
+    });
   },
 })
 export default class App extends Vue {
@@ -43,10 +44,8 @@ export default class App extends Vue {
     this.$toast.info(notification.getBody());
   }
 
-  redirectAuth() {
-    if (!this.$store.state.auth.name) {
-      this.$router.push('sign-in');
-    }
+  isAuth() {
+    return this.$store.state.auth.name;
   }
 }
 </script>

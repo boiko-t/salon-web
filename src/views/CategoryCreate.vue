@@ -58,7 +58,6 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { Category } from '@/entities/index';
-
 import PLACEHOLDER_IMAGE from '@/assets/icons/upload-image.png';
 
 @Component({
@@ -77,21 +76,21 @@ export default class CategoryCrete extends Vue {
     const fileReader = new FileReader();
     fileReader.readAsDataURL(this.$refs.imageUploadInput.files[0]);
     fileReader.addEventListener('load', (e) => {
-      this.category.imageUrl = e.target.result;
+      this.category.setImageUrl(e.target.result);
       this.imageValid = true;
     });
   }
 
   onEditSave() {
     const validationFailed = this.isImageEmpty();
-    if(validationFailed) {
-      this.$toast.error(validationFailed);
+    if (validationFailed) {
+      this.$toast.error(validationFailed.toString());
       return;
     }
     this.$store.dispatch('categories/create', this.category)
       .then((id) => {
         this.$router.push(`categories/${id}`);
-        this.$toast.info(this.$t('categoryCreatedNotification'));
+        this.$toast.info(this.$t('categoryCreatedNotification').toString());
       });
   }
 
@@ -113,8 +112,8 @@ export default class CategoryCrete extends Vue {
     }
     return true;
   }
-
 }
+
 </script>
 <style lang="scss">
   .upload-image {

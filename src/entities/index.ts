@@ -91,7 +91,8 @@ export class Product {
   price: string;
   unit: string;
 
-  constructor(id: string, categoryId: string, name: string, description: string, price: string, unit: string) {
+  constructor(id: string, categoryId: string, name: string,
+              description: string, price: string, unit: string) {
     this.id = id;
     this.categoryId = categoryId;
     this.name = name;

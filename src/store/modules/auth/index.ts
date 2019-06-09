@@ -13,21 +13,22 @@ class State {
 
 export const actions = {
   isUserAuth({ commit }: { commit: any }) {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        commit('SET_USER_DATA', user);
-      }
+    return new Promise((resolve, reject) => {
+      const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+        unsubscribe();
+        if (user) {
+          commit('SET_USER_DATA', user);
+        }
+        resolve(user);
+      }, reject);
     });
   },
 
   async signIn({ state, commit }: {state: State, commit: any}) {
     const service = new FirebaseAuthService();
-    try {
-      const { user } = await service.signIn(state.email, state.password);
-      commit('SET_USER_DATA', user);
-    } catch (error) {
-      Promise.reject(error);
-    }
+    return service.signIn(state.email, state.password)
+      .then(({ user }) => commit('SET_USER_DATA', user))
+      .catch(e => Promise.reject(e));
   },
 
   async signInGoogle({ commit }: {commit: any}) {
