@@ -3,7 +3,6 @@ import AuthService from '@/services/types/Auth';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 
-import User = firebase.User;
 import UserCredential = firebase.auth.UserCredential;
 
 export default class FirebaseAuthService implements AuthService<UserCredential> {
@@ -22,20 +21,11 @@ export default class FirebaseAuthService implements AuthService<UserCredential> 
       .catch(e => Promise.reject(e));
   }
 
-  signOut(): boolean {
-    return false;
+  signOut() {
+    return firebase.auth().signOut();
   }
 
   signUpPassword(login: string, password: string): Promise<UserCredential> {
     return Promise.reject();
-  }
-
-  getUser(): Promise<User> {
-    return new Promise((resolve, reject) => {
-      const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-        unsubscribe();
-        resolve(user);
-      }, reject);
-    });
   }
 }

@@ -14,9 +14,8 @@
             <v-spacer></v-spacer>
             <v-btn
                     flat
-                    href="https://github.com/vuetifyjs/vuetify/releases/latest"
-                    target="_blank">
-                <span class="mr-2">Latest Release</span>
+                    @click="signOut">
+                <span class="mr-2">{{$t('signOut')}}</span>
             </v-btn>
         </v-toolbar>
 
@@ -113,16 +112,18 @@ export default class CoreMenu extends Vue {
     drawer: any = null;
 
     items: DrawerItem[] = [
-      new DrawerItem('/', 'Home', 'dashboard'),
-      new DrawerItem('/about', 'About', 'question_answer'),
-      new DrawerItem('/sign-in', 'Sign in', 'account_box'),
-      new DrawerItem('/categories', 'Categories', 'view_column'),
-      new DrawerItem('/notifications', 'Notifications', 'notifications'),
+      new DrawerItem('/', 'Categories', 'view_column'),
       new DrawerItem('/services', 'Services', 'event_seat'),
+      new DrawerItem('/notifications', 'Notifications', 'notifications'),
     ];
 
     openDrawer() {
       this.drawer = !this.drawer;
+    }
+
+    signOut() {
+      this.$store.dispatch('auth/signOut');
+      // .then(() => this.$router.push('/sign-in'));
     }
 }
 </script>

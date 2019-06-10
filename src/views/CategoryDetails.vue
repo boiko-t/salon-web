@@ -81,9 +81,9 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
-  import { Category } from '@/entities/index';
-  import ProductList from '@/components/ProductList.vue';
+import { Component, Vue } from 'vue-property-decorator';
+import { Category } from '@/entities/index';
+import ProductList from '@/components/ProductList.vue';
 
   @Component({
     components: {
@@ -116,7 +116,7 @@
       this.$store.dispatch('categories/getCategoryById', this.id);
     },
   })
-  export default class CategoryDetailed extends Vue {
+export default class CategoryDetailed extends Vue {
     public editMode: boolean = false;
     public category!: Category;
     public buffer!: Category;
@@ -152,5 +152,16 @@
       this.category.setImageUrl(this.initCategoryImgPath);
       this.editMode = false;
     }
-  }
+}
 </script>
+<style lang="scss">
+  .upload-image {
+    border-radius: 2px;
+    cursor: pointer;
+    transition: box-shadow .1s linear;
+
+    &:hover {
+      @include shadow-2dp-color(#212121);
+    }
+  }
+</style>

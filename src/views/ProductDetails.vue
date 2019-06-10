@@ -68,11 +68,15 @@
               {{$t('unitLabel')}}
             </v-flex>
             <v-flex md8>
-              <v-text-field
+              <v-overflow-btn
                 v-if="editMode"
-                v-model="buffer.unit"
+                ref="unitsListDropdown"
+                :items="categoryList"
                 :label="$t('unitLabel')"
-                required></v-text-field>
+                editable
+                item-value="id"
+                item-text="name"
+              ></v-overflow-btn>
               <div v-else>
                 {{product.unit}}
               </div>

@@ -22,53 +22,42 @@ admin.initializeApp();
 
 exports.sendFollowerNotification = functions.database.ref('/visits/{visitId}')
     .onCreate(async (change, context) => {
-      const visitId = context.params.followerUid;
+      const visitId = context.params.visitId;
 
       console.log('New visit created');
 
-      // Get the list of device notification tokens.
       const getDeviceTokensPromise = admin.database()
           .ref(`/notificationTokens`).once('value');
 
-      // Get the follower profile.
       const getCreatedVisitPromise = admin.database()
         .ref(`visits/${visitId}`).once('value');
 
-      // The snapshot to the user's tokens.
       let tokensSnapshot;
-
-      // The array containing all the user's tokens.
       let tokens;
 
       const results = await Promise.all([getDeviceTokensPromise, getCreatedVisitPromise]);
       tokensSnapshot = results[0];
       const visit = results[1];
 
-      // Check if there are any device tokens.
       if (!tokensSnapshot.hasChildren()) {
         return console.log('There are no notification tokens to send to.');
       }
       console.log('There are', tokensSnapshot.numChildren(), 'tokens to send notifications to.');
 
-      // Notification details.
       const payload = {
         notification: {
           title: 'New visit added!',
-          body:  `${visit.clientName} has completed their visit`,
+          body:  `${visit.val().clientName} has completed their visit`,
         }
       };
 
-      // Listing all tokens as an array.
       tokens = Object.keys(tokensSnapshot.val());
-      // Send notifications to all tokens.
       const response = await admin.messaging().sendToDevice(tokens, payload);
-      // For each message check if there was an error.
       const tokensToRemove = [];
       response.results.forEach((result, index) => {
         const error = result.error;
         if (error) {
           console.error('Failure sending notification to', tokens[index], error);
-          // Cleanup the tokens who are not registered anymore.
           if (error.code === 'messaging/invalid-registration-token' ||
               error.code === 'messaging/registration-token-not-registered') {
             tokensToRemove.push(tokensSnapshot.ref.child(tokens[index]).remove());

@@ -8,7 +8,7 @@ export default class FirebaseNotificationService implements NotificationService 
   async subscribe(handler: (notification: Notification) => {}) {
     const messaging = firebase.messaging();
     messaging.onMessage((payload) => {
-      handler(new Notification(payload.data.title, payload.data.body));
+      handler(new Notification(payload.notification.title, payload.notification.body));
     });
     const token = await messaging.getToken();
     const dbService = new FirebaseDatabaseService();

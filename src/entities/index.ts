@@ -109,7 +109,7 @@ export class CategoryPreview {
 }
 
 export enum Unit {
-  Mililiter = 'ml',
+  Milliliter = 'ml',
   Gram = 'gr',
 }
 

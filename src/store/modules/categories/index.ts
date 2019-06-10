@@ -36,11 +36,13 @@ export const actions = {
   updateCategoryDetailed({ state }: { state: State }) {
     const dbService = new FirebaseDatabaseService();
     const storageService = new FirebaseStorageService();
-    dbService.updateData(`${CATEGORY_NODE_NAME}/${state.categoryDetails.getId()}`, state.categoryDetails.toJsonUrl());
     storageService.uploadFile(
       `${CATEGORY_NODE_NAME}/${state.categoryDetails.getId()}`,
       state.categoryDetails.getImageUrl(),
-    );
+    ).then((url) => {
+      state.categoryDetails.setImageUrl(url);
+      dbService.updateData(`${CATEGORY_NODE_NAME}/${state.categoryDetails.getId()}`, state.categoryDetails.toJsonUrl());
+    });
   },
 
   create({ state }: { state: State }, category: Category) {

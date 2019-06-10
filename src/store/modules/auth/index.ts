@@ -37,6 +37,13 @@ export const actions = {
       .then(({ user }) => commit('SET_USER_DATA', user))
       .catch(e => Promise.reject(e));
   },
+
+  async signOut({ commit }: {commit: any}) {
+    const service = new FirebaseAuthService();
+    return service.signOut()
+      .then(() => commit('SET_USER_DATA', {}))
+      .catch(e => Promise.reject(e));
+  },
 };
 
 export const mutations = {

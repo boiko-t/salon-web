@@ -4,6 +4,9 @@
             fluid
             grid-list-xl
     >
+      <!-- <v-flex md12>
+        <h2>{{$t('categoryCreateTitle')}}</h2>
+      </v-flex> -->
       <v-layout
         justify-center
       >
@@ -68,7 +71,7 @@ import PLACEHOLDER_IMAGE from '@/assets/icons/upload-image.png';
   },
 })
 export default class CategoryCrete extends Vue {
-  public category: Category = new Category('1', 'jdj', 'ddd', '');
+  public category: Category = new Category();
   id!: string;
   imageValid = true;
 

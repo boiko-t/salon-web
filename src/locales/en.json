@@ -1,5 +1,6 @@
 {
   "appName": "Salon",
+  "signOut": "Sign out",
   "pageNotFoundTitle": "Sorry, page not found 😢",
   "unknownUserName": "Unknown User",
   "emailLabel": "Email",
@@ -27,6 +28,7 @@
   "categoryDescriptionLabel": "Description",
   "categoryNotFound": "Sorry, category not found 😢",
 
+  "categoryCreateTitle": "Create new category",
   "categoryNameRequired": "Please enter name",
   "categoryNameLength": "Name is too long",
   "categoryImageRequired": "Please select an image",

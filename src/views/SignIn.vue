@@ -1,5 +1,6 @@
 <template>
   <v-form v-model="valid">
+    <h2>{{$t('signInLabel')}}</h2>
     <v-container>
       <v-layout justify-center>
         <v-flex
