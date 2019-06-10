@@ -57,7 +57,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { Category } from '@/entities/index';
+import { Category } from '@/entities';
 import PLACEHOLDER_IMAGE from '@/assets/icons/upload-image.png';
 
 @Component({
@@ -74,9 +74,9 @@ export default class CategoryCrete extends Vue {
 
   onFileUpload() {
     const fileReader = new FileReader();
-    fileReader.readAsDataURL(this.$refs.imageUploadInput.files[0]);
+    fileReader.readAsDataURL(this.$refs.imageUploadInput['files'][0]);
     fileReader.addEventListener('load', (e) => {
-      this.category.setImageUrl(e.target.result);
+      this.category.setImageUrl(e.target['result']);
       this.imageValid = true;
     });
   }

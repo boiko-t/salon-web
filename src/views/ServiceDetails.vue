@@ -157,7 +157,7 @@ export default class ServiceDetails extends Vue {
     onEditSave() {
       this.editMode = false;
       Object.assign(this.product, this.buffer);
-      this.product.categoryId = this.$refs.categoryListDropdown.selectedItems[0].id;
+      this.product.categoryId = this.$refs.categoryListDropdown['selectedItems'][0].id;
       this.$store.dispatch('products/updateProduct');
     }
 

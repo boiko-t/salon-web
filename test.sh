@@ -3,7 +3,7 @@ curl -X POST -H "Authorization: key=AAAAkQiehuA:APA91bGefUxSDFlOV7qAOtCV03qW0O_e
     "title": "Portugal vs. Denmark",
     "body": "kk10443",
     "icon": "https://cdn0.iconfinder.com/data/icons/essentials-solid/100/Notification-512.png",
-    "click_action": "https://localhost:8081"
+    "click_action": "https://localhost:8080"
   },
-  "to": "e9HomZDz5a8:APA91bHkPoNitWRIaD6aMPB1iSP6yuu7Paww5ABx2Uo9erU3C3YfScSQjaqVedpjd1JLIGV36C3VCh-J_m5m5YyDrvYOHFD_5ALLx0Dxh3zTLhwpqdL7hMp4GJ4iUunP4FU-iVo_n8uh"
+  "to": "dbFtW2SpB_0:APA91bFE0Wa0a9kaqdQwSE4A0Y5qUyWNCSCU9_Sjpi3dBVIjfAcLgNBMwNpyJ2rpfdvmMrcHegguqO9-5L60L46rxqc8H1yGLYOV5cFWWm1hWMpQlxQNwOy28P3ak6ykyU19X4hO7mDI"
 }' "https://fcm.googleapis.com/fcm/send"

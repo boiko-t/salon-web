@@ -7,6 +7,8 @@ import Categories from './views/Categories.vue';
 import CategoryDetails from './views/CategoryDetails.vue';
 import CategoryCreate from './views/CategoryCreate.vue';
 import ProductDetails from './views/ProductDetails.vue';
+import Services from './views/Services.vue';
+import ServiceDetails from './views/ServiceDetails.vue';
 
 Vue.use(Router);
 
@@ -52,6 +54,16 @@ export default new Router({
       path: '/products/:id',
       name: 'product',
       component: ProductDetails,
+    },
+    {
+      path: '/services/:id',
+      name: 'services',
+      component: ServiceDetails,
+    },
+    {
+      path: '/services',
+      name: 'service',
+      component: Services,
     },
     {
       path: '/about',

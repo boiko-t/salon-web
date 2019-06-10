@@ -28,31 +28,31 @@
 </template>
 
 <script lang="ts">
-  import { mapState } from 'vuex';
-  import { Component, Vue } from 'vue-property-decorator';
-  import { Service } from '@/entities/index';
-  import ProductList from '@/components/ProductList.vue';
+import { mapState } from 'vuex';
+import { Component, Vue } from 'vue-property-decorator';
+import { Service } from '@/entities/index';
+import ProductList from '@/components/ProductList.vue';
 
-  @Component({
-    components: { ProductList },
-    computed: {
-      ...mapState('services', ['services']),
-    },
-    mounted() {
-      this.init();
-    },
-  })
-  export default class Services extends Vue {
+@Component({
+  components: { ProductList },
+  computed: {
+    ...mapState('services', ['services']),
+  },
+  mounted() {
+    this.init();
+  },
+})
+export default class Services extends Vue {
     services!: Service[];
 
     init() {
       this.$store.dispatch('services/initCollection');
     }
 
-    // deleteCategory(id) {
-    //   this.$store.dispatch('services/delete', id);
-    // }
-  }
+  // deleteCategory(id) {
+  //   this.$store.dispatch('services/delete', id);
+  // }
+}
 </script>
 <style lang="scss">
 </style>

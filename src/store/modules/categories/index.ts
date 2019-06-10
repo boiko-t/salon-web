@@ -1,6 +1,5 @@
-import { Module, Action } from 'vuex';
+import { Module } from 'vuex';
 import { Category, Product } from '@/entities/index';
-import * as firebase from 'firebase/app';
 import RootState from '../../types';
 import FirebaseDatabaseService from '@/services/FirebaseDatabaseService';
 import FirebaseStorageService from '@/services/FirebaseStorageService';
@@ -18,25 +17,30 @@ class State {
 
 export const actions = {
   initCollection({ commit }: { commit: any }) {
-    const service = new FirebaseDatabaseService();
-    service.setDataListener(CATEGORY_NODE_NAME, (data: DataSnapshot) => {
+    const dbService = new FirebaseDatabaseService();
+    dbService.setDataListener(CATEGORY_NODE_NAME, (data: DataSnapshot) => {
       commit('SET_COLLECTIONS', data.val());
     });
   },
 
   getCategoryById({ state, commit }: { state: State, commit: any }, id: string) {
-    const service = new FirebaseDatabaseService();
-    service.setDataListener(`${CATEGORY_NODE_NAME}/${id}`, (data: DataSnapshot) => {
+    const dbService = new FirebaseDatabaseService();
+    dbService.setDataListener(`${CATEGORY_NODE_NAME}/${id}`, (data: DataSnapshot) => {
       commit('SET_CATEGORY_DETAILED', { data: data.val(), id });
     });
-    service.setDataListener(PRODUCT_NODE_NAME, (data: DataSnapshot) => {
+    dbService.setDataListener(PRODUCT_NODE_NAME, (data: DataSnapshot) => {
       commit('SET_CATEGORY_DETAILED_PRODUCTS', { data: data.val(), id });
     });
   },
 
-  updateCategoryDetailed({ state, commit }: { state: State, commit: any }) {
-    const service = new FirebaseDatabaseService();
-    service.updateData(`${CATEGORY_NODE_NAME}/${state.categoryDetails.getId()}`, state.categoryDetails.toJsonUrl());
+  updateCategoryDetailed({ state }: { state: State }) {
+    const dbService = new FirebaseDatabaseService();
+    const storageService = new FirebaseStorageService();
+    dbService.updateData(`${CATEGORY_NODE_NAME}/${state.categoryDetails.getId()}`, state.categoryDetails.toJsonUrl());
+    storageService.uploadFile(
+      `${CATEGORY_NODE_NAME}/${state.categoryDetails.getId()}`,
+      state.categoryDetails.getImageUrl(),
+    );
   },
 
   create({ state }: { state: State }, category: Category) {
@@ -63,13 +67,13 @@ export const actions = {
 };
 
 export const mutations = {
-  SET_CATEGORY_DETAILED(state: State, { data, id }: { data: any, id: string}) {
+  SET_CATEGORY_DETAILED(state: State, { data, id }: { data: any, id: string }) {
     if (data) {
       state.categoryDetails = new Category(id, data.name, data.description, data.imageUrl);
     }
   },
 
-  SET_CATEGORY_DETAILED_PRODUCTS(state: State, { data, id }: { data: any, id: string}) {
+  SET_CATEGORY_DETAILED_PRODUCTS(state: State, { data, id }: { data: any, id: string }) {
     const dataKeys = Object.keys(data) || [];
     const products = [];
     dataKeys.forEach((key) => {

@@ -1,8 +1,7 @@
 import { Module } from 'vuex';
-import { Category, Service } from '@/entities/index';
+import { Service } from '@/entities/index';
 import RootState from '../../types';
 import FirebaseDatabaseService from '@/services/FirebaseDatabaseService';
-import FirebaseStorageService from '@/services/FirebaseStorageService';
 
 import DataSnapshot = firebase.database.DataSnapshot;
 

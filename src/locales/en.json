@@ -30,5 +30,7 @@
   "categoryNameRequired": "Please enter name",
   "categoryNameLength": "Name is too long",
   "categoryImageRequired": "Please select an image",
-  "categoryCreatedNotification": "Category has been created successfully!"
+  "categoryCreatedNotification": "Category has been created successfully!",
+
+  "notificationAccessError": "Background notification will not work without permission"
 }

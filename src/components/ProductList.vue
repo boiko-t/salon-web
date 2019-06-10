@@ -27,7 +27,7 @@
           slot="items"
           slot-scope="{ item }"
         >
-          <router-link :to="`/products/${item.id}`">
+          <router-link :to="`/${routerPath}/${item.id}`">
             <td>{{ item.name }}</td>
           </router-link>
           <td>{{ item.description }}</td>
@@ -73,6 +73,10 @@ export default {
       type: Array,
       required: true,
       default: () => [],
+    },
+    routerPath: {
+      type: String,
+      required: true,
     },
   },
 };

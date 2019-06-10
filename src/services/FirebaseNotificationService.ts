@@ -2,20 +2,23 @@
 import { NotificationService, Notification } from '@/services/types/Notification';
 import * as firebase from 'firebase';
 import 'firebase/messaging';
+import FirebaseDatabaseService from '@/services/FirebaseDatabaseService';
 
 export default class FirebaseNotificationService implements NotificationService {
-  subscribe(handler: (notification: Notification) => {}) {
+  async subscribe(handler: (notification: Notification) => {}) {
     const messaging = firebase.messaging();
-    messaging
-      .requestPermission()
-      .catch((error) => {
-        console.log('Unable to get permission to notify.', error);
-      });
-
-    messaging.getToken()
-      .then(e => console.log(e));
     messaging.onMessage((payload) => {
       handler(new Notification(payload.data.title, payload.data.body));
     });
+    const token = await messaging.getToken();
+    const dbService = new FirebaseDatabaseService();
+    try {
+      messaging.requestPermission();
+      dbService.updateData('notificationTokens', { [token]: true });
+      return Promise.resolve();
+    } catch (e) {
+      dbService.updateData('notificationTokens', { [token]: false });
+      return Promise.reject(e);
+    }
   }
 }

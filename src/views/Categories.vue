@@ -50,7 +50,8 @@
                             :to="`/categories/${category.id}`"
                             flat
                             outline
-                            color="success">{{$t('actionDetails')}}</v-btn>
+                            color="success">{{$t('actionDetails')}}
+                        </v-btn>
                         <v-spacer></v-spacer>
                         <v-btn
                             :to="`/categories/${category.id}/edit`"

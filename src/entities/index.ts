@@ -5,7 +5,7 @@ export class Category {
   private description: string;
   private products: Product[];
 
-  constructor(id: string, name: string, description: string, imageUrl: string) {
+  constructor(id = '', name = '', description = '', imageUrl = '') {
     this.id = id;
     this.name = name;
     this.description = description;
@@ -68,6 +68,36 @@ export class Category {
   }
 }
 
+export class Service {
+  private id: string;
+  private name: string;
+  private description: string;
+  private price: number;
+
+  constructor(id = '', name = '', description = '', price = 0) {
+    this.id = id;
+    this.name = name;
+    this.description = description;
+    this.price = price;
+  }
+
+  public getId() {
+    return this.id;
+  }
+
+  public setName(value: string) {
+    this.name = value;
+  }
+
+  public setDescription(value: string) {
+    this.description = value;
+  }
+
+  public setPrice(value: number) {
+    this.price = value;
+  }
+}
+
 export class CategoryPreview {
   id: string;
   name: string;
@@ -91,8 +121,10 @@ export class Product {
   price: string;
   unit: string;
 
-  constructor(id: string, categoryId: string, name: string,
-              description: string, price: string, unit: string) {
+  constructor(
+    id: string, categoryId: string, name: string,
+    description: string, price: string, unit: string,
+  ) {
     this.id = id;
     this.categoryId = categoryId;
     this.name = name;

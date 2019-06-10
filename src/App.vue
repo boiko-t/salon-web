@@ -28,7 +28,9 @@ const SIGN_IN_PAGE = 'sign-in';
 
   mounted() {
     const notificationService = new FirebaseNotificationService();
-    notificationService.subscribe(this.handleForegroundNotification);
+    notificationService
+      .subscribe(this.handleForegroundNotification)
+      .catch(e => this.$toast.error(this.$t('notificationAccessError')));
 
     this.$router.beforeEach((to, from, next) => {
       if (!this.isAuth() && to.path !== SIGN_IN_PAGE) {
