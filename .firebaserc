@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "prod": "test-app-59413",
+    "salon": "test-app-59413",
+    "default": "test-app-59413"
+  }
+}
