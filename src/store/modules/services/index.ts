@@ -1,9 +1,10 @@
 import { Module } from 'vuex';
-import { Product, Service } from '@/entities/index';
+import { Category, Product, Service } from '@/entities/index';
 import RootState from '../../types';
 import FirebaseDatabaseService from '@/services/FirebaseDatabaseService';
 
 import DataSnapshot = firebase.database.DataSnapshot;
+import FirebaseStorageService from '@/services/FirebaseStorageService';
 
 const SERVICES_NODE_NAME = 'services';
 
@@ -24,6 +25,11 @@ export const actions = {
     service.setDataListener(`${SERVICES_NODE_NAME}/${id}`, (data: DataSnapshot) => {
       commit('SET_SERVICE', { data: data.val(), id });
     });
+  },
+  create({ state }: { state: State }, category: Category) {
+    const dbService = new FirebaseDatabaseService();
+    return dbService.create(SERVICES_NODE_NAME, 'service', category.toJson())
+      .then(id => Promise.resolve(id));
   },
   updateService({ state, commit }: { state: State, commit: any }) {
     const service = new FirebaseDatabaseService();

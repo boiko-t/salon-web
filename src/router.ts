@@ -9,6 +9,7 @@ import CategoryCreate from './views/CategoryCreate.vue';
 import ProductDetails from './views/ProductDetails.vue';
 import Services from './views/Services.vue';
 import ServiceDetails from './views/ServiceDetails.vue';
+import ServiceCreate from './views/ServiceCreate.vue';
 
 Vue.use(Router);
 
@@ -64,6 +65,11 @@ export default new Router({
       path: '/services',
       name: 'service',
       component: Services,
+    },
+    {
+      path: '/new-service',
+      name: 'new-service',
+      component: ServiceCreate,
     },
     {
       path: '*',

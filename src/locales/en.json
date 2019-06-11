@@ -21,6 +21,8 @@
   "unitLabel": "Unit",
   "categoryLabel": "Category",
   "servicesListTitle": "Services",
+  "nameRequired": "Please enter name",
+  "nameLength": "Name is too long",
 
   "actionDetails": "Details",
   "actionSaveEdit": "Save",
@@ -34,6 +36,7 @@
   "categoryNameLength": "Name is too long",
   "categoryImageRequired": "Please select an image",
   "categoryCreatedNotification": "Category has been created successfully!",
+  "serviceCreatedNotification": "Category has been created successfully!",
 
   "notificationAccessError": "Background notification will not work without permission"
 }
