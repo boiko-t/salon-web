@@ -5,6 +5,7 @@ import { auth } from './modules/auth/index';
 import { categories } from './modules/categories/index';
 import { products } from './modules/products/index';
 import { services } from './modules/services/index';
+import { visits } from './modules/visits/index';
 
 Vue.use(Vuex);
 
@@ -17,6 +18,7 @@ const store: StoreOptions<RootState> = {
     categories,
     products,
     services,
+    visits,
   },
 };
 export default new Vuex.Store(store);

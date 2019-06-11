@@ -106,6 +106,28 @@ export class Service {
   }
 }
 
+export class Visit {
+  private id: string;
+  private clientName: string;
+  private masterName: string;
+  private date: string;
+  private price: number;
+  private serviceId: string;
+  private products: ProductUsageRecord[];
+
+  constructor(id = '', clientName = '', masterName = '', date = '', price = 0,
+    serviceId = '', products = []) {
+    const dateFormat = new Date(date);
+    this.id = id;
+    this.clientName = clientName;
+    this.masterName = masterName;
+    this.price = price;
+    this.date = `${dateFormat.toLocaleDateString()}, ${dateFormat.toLocaleTimeString()}`;
+    this.serviceId = serviceId;
+    this.products = products;
+  }
+}
+
 export class CategoryPreview {
   id: string;
   name: string;
@@ -113,6 +135,16 @@ export class CategoryPreview {
   constructor(id: string, name: string) {
     this.id = id;
     this.name = name;
+  }
+}
+
+export class ProductUsageRecord {
+  productId: string;
+  amount: string;
+
+  constructor(id: string, amount: string) {
+    this.productId = id;
+    this.amount = amount;
   }
 }
 

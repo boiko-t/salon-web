@@ -18,7 +18,7 @@
                 >
                     <v-data-table
                             :headers="headers"
-                            :items="items"
+                            :items="visits"
                             hide-actions
                     >
                         <template
@@ -34,46 +34,10 @@
                                 slot="items"
                                 slot-scope="{ item }"
                         >
-                            <td>{{ item.name }}</td>
-                            <td>{{ item.country }}</td>
-                            <td>{{ item.city }}</td>
-                            <td class="text-xs-right">{{ item.salary }}</td>
-                        </template>
-                    </v-data-table>
-                </material-card>
-            </v-flex>
-            <v-flex
-                    md12
-            >
-                <material-card
-                        color="green"
-                        flat
-                        full-width
-                        title="Table on Plain Background"
-                        text="Here is a subtitle for this table"
-                >
-                    <v-data-table
-                            :headers="headers"
-                            :items="items.slice(0, 7)"
-                            hide-actions
-                    >
-                        <template
-                                slot="headerCell"
-                                slot-scope="{ header }"
-                        >
-                          <span
-                                  class="subheading font-weight-light text--darken-3"
-                                  v-text="header.text"
-                          />
-                        </template>
-                        <template
-                                slot="items"
-                                slot-scope="{ item }"
-                        >
-                            <td>{{ item.name }}</td>
-                            <td>{{ item.country }}</td>
-                            <td>{{ item.city }}</td>
-                            <td class="text-xs-right">{{ item.salary }}</td>
+                            <td>{{ item.clientName }}</td>
+                            <td>{{ item.masterName }}</td>
+                            <td>{{ item.date }}</td>
+                            <td>{{ item.price }}</td>
                         </template>
                     </v-data-table>
                 </material-card>
@@ -82,83 +46,48 @@
     </v-container>
 </template>
 
-<!--<script lang="ts">-->
-<!--import { Component, Vue } from 'vue-property-decorator';-->
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import MaterialCard from '@/components/MaterialCard.vue';
+import { mapState } from 'vuex';
+import { Visit } from '@/entities';
 
-<!--@Component({})-->
-<!--export default class SignIn extends Vue {-->
+class TableColumn {
+  public sortable: boolean;
+  public text!: string;
+  public value!: string;
 
-<!--}-->
-<!--</script>-->
-<script>
-import MaterialCard from '../components/MaterialCard.vue';
+  constructor(text: string, value: string, sortable = true) {
+    this.text = text;
+    this.value = value;
+    this.sortable = sortable;
+  }
+}
 
-export default {
-  name: 'Notifications',
+@Component({
   components: {
     MaterialCard,
   },
-  data: () => ({
-    headers: [
-      {
-        sortable: true,
-        text: 'Name',
-        value: 'name',
-      },
-      {
-        sortable: false,
-        text: 'Country',
-        value: 'country',
-      },
-      {
-        sortable: false,
-        text: 'City',
-        value: 'city',
-      },
-      {
-        sortable: false,
-        text: 'Salary',
-        value: 'salary',
-        align: 'right',
-      },
-    ],
-    items: [
-      {
-        name: 'Dakota Rice',
-        country: 'Niger',
-        city: 'Oud-Tunrhout',
-        salary: '$35,738',
-      },
-      {
-        name: 'Minerva Hooper',
-        country: 'Curaçao',
-        city: 'Sinaai-Waas',
-        salary: '$23,738',
-      }, {
-        name: 'Sage Rodriguez',
-        country: 'Netherlands',
-        city: 'Overland Park',
-        salary: '$56,142',
-      }, {
-        name: 'Philip Chanley',
-        country: 'Korea, South',
-        city: 'Gloucester',
-        salary: '$38,735',
-      }, {
-        name: 'Doris Greene',
-        country: 'Malawi',
-        city: 'Feldkirchen in Kārnten',
-        salary: '$63,542',
-      }, {
-        name: 'Mason Porter',
-        country: 'Chile',
-        city: 'Gloucester',
-        salary: '$78,615',
-      },
-    ],
-  }),
-};
-</script>
+  computed: {
+    ...mapState('visits', ['visits']),
+  },
+  mounted() {
+    this.init();
+  },
+})
+export default class Notifications extends Vue {
+  headers = [
+    new TableColumn('Client', 'clientName', false),
+    new TableColumn('Master', 'masterName', false),
+    new TableColumn('Date', 'date', true),
+    new TableColumn('Price', 'price', true),
+  ];
+  visits!: Visit[];
 
+  init() {
+    this.$store.dispatch('visits/initCollection');
+  }
+}
+</script>
 <style lang="scss">
 </style>
