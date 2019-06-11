@@ -35,7 +35,7 @@
             <v-icon>edit</v-icon>
           </v-btn>
           <v-btn
-            @click="onDeleteCategory"
+            @click="onDelete"
             class="grey--text"
             icon>
             <v-icon>delete</v-icon>
@@ -48,6 +48,27 @@
           :title="product.name"
           :text="product.description"
         >
+          <v-layout v-if="editMode">
+            <v-flex md4>
+              {{$t('productName')}}
+            </v-flex>
+            <v-flex md8>
+              <v-text-field
+                v-model="buffer.name"
+                :label="$t('productName')"
+                required></v-text-field>
+            </v-flex>
+          </v-layout>
+          <v-layout v-if="editMode">
+            <v-flex md4>
+              {{$t('productDescription')}}
+            </v-flex>
+            <v-flex md8>
+              <v-text-field
+                v-model="buffer.description"
+                :label="$t('productDescription')"></v-text-field>
+            </v-flex>
+          </v-layout>
           <v-layout>
             <v-flex md4>
               {{$t('priceLabel')}}
@@ -71,7 +92,7 @@
               <v-overflow-btn
                 v-if="editMode"
                 ref="unitsListDropdown"
-                :items="categoryList"
+                :items="['ml', 'gr']"
                 :label="$t('unitLabel')"
                 editable
                 item-value="id"
@@ -162,6 +183,7 @@ export default class ProductDetails extends Vue {
       this.editMode = false;
       Object.assign(this.product, this.buffer);
       this.product.categoryId = this.$refs.categoryListDropdown['selectedItems'][0].id;
+      this.product.unit = this.$refs.unitsListDropdown['selectedItems'][0];
       this.$store.dispatch('products/updateProduct');
     }
 

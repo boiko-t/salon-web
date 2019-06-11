@@ -1,5 +1,5 @@
 import { Module } from 'vuex';
-import { Service } from '@/entities/index';
+import { Product, Service } from '@/entities/index';
 import RootState from '../../types';
 import FirebaseDatabaseService from '@/services/FirebaseDatabaseService';
 
@@ -9,7 +9,7 @@ const SERVICES_NODE_NAME = 'services';
 
 class State {
   services: Service[] = [];
-  serviceDetails: Service = new Service();
+  service: Service = new Service();
 }
 
 export const actions = {
@@ -18,6 +18,20 @@ export const actions = {
     dbService.setDataListener(SERVICES_NODE_NAME, (data: DataSnapshot) => {
       commit('SET_COLLECTIONS', data.val());
     });
+  },
+  getServicesById({ state, commit }: { state: State, commit: any }, id: string) {
+    const service = new FirebaseDatabaseService();
+    service.setDataListener(`${SERVICES_NODE_NAME}/${id}`, (data: DataSnapshot) => {
+      commit('SET_SERVICE', { data: data.val(), id });
+    });
+  },
+  updateService({ state, commit }: { state: State, commit: any }) {
+    const service = new FirebaseDatabaseService();
+    service.updateData(`${SERVICES_NODE_NAME}/${state.service.getId()}`, state.service.toJson());
+  },
+  delete({ state }: { state: State }, id: string) {
+    const service = new FirebaseDatabaseService();
+    service.deleteData(`${SERVICES_NODE_NAME}/${id}`);
   },
 };
 
@@ -38,6 +52,10 @@ export const mutations = {
     if (dataKeys.length !== state.services.length) {
       state.services = state.services.filter(item => dataKeys.includes(item.getId()));
     }
+  },
+  SET_SERVICE(state: State, { data, id }: { data: any, id: string}) {
+    state.service = new Service(id, data.name,
+      data.description, data.price);
   },
 };
 

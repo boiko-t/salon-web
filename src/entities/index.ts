@@ -96,6 +96,14 @@ export class Service {
   public setPrice(value: number) {
     this.price = value;
   }
+
+  toJson() {
+    return {
+      name: this.name,
+      description: this.description,
+      price: this.price,
+    };
+  }
 }
 
 export class CategoryPreview {

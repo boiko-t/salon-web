@@ -122,8 +122,8 @@ export default class CoreMenu extends Vue {
     }
 
     signOut() {
-      this.$store.dispatch('auth/signOut');
-      // .then(() => this.$router.push('/sign-in'));
+      this.$store.dispatch('auth/signOut')
+        .then(() => this.$router.push('/sign-in'));
     }
 }
 </script>

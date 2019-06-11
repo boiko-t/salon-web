@@ -35,7 +35,7 @@
             <v-icon>edit</v-icon>
           </v-btn>
           <v-btn
-            @click="onDeleteCategory"
+            @click="onDelete"
             class="grey--text"
             icon>
             <v-icon>delete</v-icon>
@@ -48,6 +48,27 @@
           :title="product.name"
           :text="product.description"
         >
+          <v-layout v-if="editMode">
+            <v-flex md4>
+              {{$t('productName')}}
+            </v-flex>
+            <v-flex md8>
+              <v-text-field
+                v-model="buffer.name"
+                :label="$t('productName')"
+                required></v-text-field>
+            </v-flex>
+          </v-layout>
+          <v-layout v-if="editMode">
+            <v-flex md4>
+              {{$t('productDescription')}}
+            </v-flex>
+            <v-flex md8>
+              <v-text-field
+                v-model="buffer.description"
+                :label="$t('productDescription')"></v-text-field>
+            </v-flex>
+          </v-layout>
           <v-layout>
             <v-flex md4>
               {{$t('priceLabel')}}
@@ -63,40 +84,6 @@
               </div>
             </v-flex>
           </v-layout>
-          <v-layout>
-            <v-flex md4>
-              {{$t('unitLabel')}}
-            </v-flex>
-            <v-flex md8>
-              <v-text-field
-                v-if="editMode"
-                v-model="buffer.unit"
-                :label="$t('unitLabel')"
-                required></v-text-field>
-              <div v-else>
-                {{product.unit}}
-              </div>
-            </v-flex>
-          </v-layout>
-          <v-layout>
-            <v-flex md4>
-              {{$t('categoryLabel')}}
-            </v-flex>
-            <v-flex md8>
-              <v-overflow-btn
-                v-if="editMode"
-                ref="categoryListDropdown"
-                :items="categoryList"
-                :label="$t('categoryLabel')"
-                editable
-                item-value="id"
-                item-text="name"
-              ></v-overflow-btn>
-              <div v-else>
-                {{categoryCaption}}
-              </div>
-            </v-flex>
-          </v-layout>
         </material-card>
       </v-flex>
     </v-layout>
@@ -106,7 +93,7 @@
 <script lang="ts">
 import { mapState } from 'vuex';
 import { Component, Vue } from 'vue-property-decorator';
-import { Product, Unit } from '@/entities/index';
+import { Product, Service, Unit } from '@/entities/index';
 import MaterialCard from '@/components/MaterialCard.vue';
 
   @Component({
@@ -114,51 +101,41 @@ import MaterialCard from '@/components/MaterialCard.vue';
       MaterialCard,
     },
     computed: {
-      ...mapState('products', ['categoryList']),
+      ...mapState('services', ['service']),
       product: {
         get() {
-          return this.$store.state.products.product;
+          return this.$store.state.services.service;
         },
         set(value) {
-          this.product = value;
+          this.service = value;
         },
       },
       id() {
         return this.$route.params.id;
       },
       buffer() {
-        const result = {};
-        Object.assign(result, this.product);
-        return result;
-      },
-      categoryCaption() {
-        if (this.categoryList.length) {
-          return this.categoryList.find(item => item.id === this.product.categoryId).name;
-        }
-        return '';
+        return Object.assign({}, this.product);
       },
     },
     mounted() {
-      this.$store.dispatch('service/getProductById', this.id);
-      this.$store.dispatch('service/getCategories');
+      this.$store.dispatch('services/getServicesById', this.id);
     },
   })
-export default class ServiceDetails extends Vue {
+export default class ProductDetails extends Vue {
     public editMode: boolean = false;
-    public product!: Product;
-    public buffer!: Product;
+    public product!: Service;
+    public buffer!: Service;
     id!: string;
 
-    onDeleteCategory() {
-      this.$store.dispatch('products/delete', this.id);
-      this.$router.back();
+    onDelete() {
+      this.$store.dispatch('services/delete', this.id);
+      this.$router.push('/services');
     }
 
     onEditSave() {
       this.editMode = false;
       Object.assign(this.product, this.buffer);
-      this.product.categoryId = this.$refs.categoryListDropdown['selectedItems'][0].id;
-      this.$store.dispatch('products/updateProduct');
+      this.$store.dispatch('services/updateService');
     }
 
     onEdit() {

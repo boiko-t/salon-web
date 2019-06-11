@@ -22,7 +22,7 @@
       space-between
       wrap
     >
-      <product-list :products="services" routerPath="services"/>
+      <product-list :products="services" :title="$t('servicesListTitle')" routerPath="services"/>
     </v-layout>
   </v-container>
 </template>

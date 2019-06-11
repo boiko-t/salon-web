@@ -35,7 +35,7 @@
             <v-icon>edit</v-icon>
           </v-btn>
           <v-btn
-            @click="onDeleteCategory"
+            @click="onDelete"
             class="grey--text"
             icon>
             <v-icon>delete</v-icon>
@@ -74,7 +74,7 @@
           <h3 class="headline ma-0">{{category.name}}</h3>
           <div class="white-space">{{category.description}}</div>
         </div>
-        <product-list :products="productList" routerPath="products"/>
+        <product-list :products="productList" :title="this.$t('productListTitle')" routerPath="products"/>
       </v-flex>
     </v-layout>
   </v-container>

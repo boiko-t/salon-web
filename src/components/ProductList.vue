@@ -6,7 +6,7 @@
       color="green"
       flat
       full-width
-      :title="$t('productListTitle')"
+      :title="title"
       text=""
     >
       <v-data-table
@@ -75,6 +75,10 @@ export default {
       default: () => [],
     },
     routerPath: {
+      type: String,
+      required: true,
+    },
+    title: {
       type: String,
       required: true,
     },

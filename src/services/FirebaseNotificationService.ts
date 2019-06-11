@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import { NotificationService, Notification } from '@/services/types/Notification';
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
 import 'firebase/messaging';
 import FirebaseDatabaseService from '@/services/FirebaseDatabaseService';
 
